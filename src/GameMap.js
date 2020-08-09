@@ -26,12 +26,12 @@ const parse = str => {
   str.split(/\n/).map(l => l.trim()).filter(l => l).forEach((line, rowIndex) => {
     const row = [];
 
-    line.replace(/\s/g, '').split('').forEach((char, columnIndex) => {
+    line.replace(/\s/g, '').split('').forEach((char, colIndex) => {
       const cell = CHAR_MAP[char];
 
       if (cell === START) {
         if (start) { throw 'A level must have only one start'; }
-        start = { x: rowIndex, y: columnIndex };
+        start = { x: colIndex, y: rowIndex };
       }
 
       if (cell === GOAL) {
@@ -45,7 +45,10 @@ const parse = str => {
     rows.push(row);
   })
 
-  return { rows, start };
+  const width = rows[0].length;
+  const height = rows.length;
+
+  return { rows, start, width, height };
 };
 
 export default { parse, START, GOAL, UNPASSABLE, PASSABLE };

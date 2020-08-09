@@ -1,6 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 import Game from './Game';
 import GameMap from './GameMap';
+
+const Root = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`
 
 const LEVEL_1 = {
   maxMoves: 8,
@@ -12,8 +21,6 @@ const LEVEL_1 = {
     XX__G
   `)
 }
-
-console.log(LEVEL_1.map)
 
 const LEVEL_2 = {
   maxMoves: 10,
@@ -28,17 +35,21 @@ const LEVEL_2 = {
 }
 
 const LEVEL_3 = {
-  maxMoves: 10,
+  maxMoves: 13,
   map: GameMap.parse(`
     S_____
-    XX_XX_
+    XX__X_
     X__XX_
-    __XGX_
-    X___X_
-    XXX___
+    __XXX_
+    XXX_X_
+    XXG___
   `)
 }
 
-const App = _props => (<Game levels={[LEVEL_1, LEVEL_2, LEVEL_3]} />)
+const App = _props => (
+  <Root>
+    <Game levels={[LEVEL_1, LEVEL_2, LEVEL_3]} />
+  </Root>
+)
 
 export default App;
