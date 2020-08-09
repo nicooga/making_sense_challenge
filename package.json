@@ -3,24 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "chai": "^4.2.0",
-    "enzyme": "^3.11.0",
-    "mocha": "^8.1.1",
+    "chai-enzyme": "^1.0.0-beta.1",
+    "enzyme-adapter-react-16": "^1.15.3",
+    "jsdom": "^16.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --mode development --config ./webpack.config.js"
+    "start": "webpack-dev-server --mode development --config ./webpack.config.js",
+    "test": "NODE_ENV=test mocha --exit --require babel-polyfill --require @babel/register --recursive 'src/**/*.spec.js?(x)'"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
+    "@babel/register": "^7.10.5",
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.11.1",
+    "babel-polyfill": "^6.26.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.11.0",
     "html-webpack-plugin": "^4.3.0",
+    "mocha": "^8.1.1",
     "prop-types": "^15.7.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
