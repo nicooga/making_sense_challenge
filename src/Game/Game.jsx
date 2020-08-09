@@ -88,8 +88,8 @@ const Level = ({ level, onWon, nextLevel }) => {
         </Overlay>
       )}
 
-      <Map tabindex='0'>
-        <Player style={{ zIndex: 1 }}
+      <Map>
+        <Player
           style={{
             left: state.playerPos.x * CELL_WIDTH,
             top: state.playerPos.y * CELL_WIDTH
