@@ -6,41 +6,6 @@ import Game from './Game';
 import { Player } from './styledComponents'
 import GameMap from '../GameMap'
 
-const LEVEL_1 = {
-  maxMoves: 8,
-  map: GameMap.parse(`
-    S____
-    XX_XX
-    XX_XX
-    ___XX
-    XX__G
-  `)
-}
-
-const LEVEL_2 = {
-  maxMoves: 10,
-  map: GameMap.parse(`
-    S_____
-    XX_XX_
-    X__XX_
-    __XGX_
-    X___X_
-    XXX___
-  `)
-}
-
-const LEVEL_3 = {
-  maxMoves: 13,
-  map: GameMap.parse(`
-    S_____
-    XX__X_
-    X__XX_
-    __XXX_
-    XXX_X_
-    XXG___
-  `)
-}
-
 const simulateKeyDown = key => {
   const event = new KeyboardEvent('keydown', { key });
   window.dispatchEvent(event);
@@ -49,8 +14,35 @@ const simulateKeyDown = key => {
 describe('Game integration', () => {
   let wrapper;
 
-  before(() => {
-    wrapper = mount(<Game levels={[LEVEL_1, LEVEL_2, LEVEL_3]} />);
+  describe('movement', () => {
+    it('works', () => {
+      const level = {
+        maxMoves: 10,
+        map: GameMap.parse(`
+          S_
+          __
+        `)
+      };
+
+      wrapper = mount(<Game levels={[level]} />);
+
+      simulateKeyDown('ArrowRight');
+      simulateKeyDown('ArrowRight'); // Doing it twice to test player can't move out of the map.
+      wrapper.update();
+      expect(wrapper.find(Player).props().style).to.include({ top: 0, left: 64});
+      simulateKeyDown('ArrowDown');
+      simulateKeyDown('ArrowDown');
+      wrapper.update();
+      expect(wrapper.find(Player).props().style).to.include({ top: 64, left: 64});
+      simulateKeyDown('ArrowLeft');
+      simulateKeyDown('ArrowLeft');
+      wrapper.update();
+      expect(wrapper.find(Player).props().style).to.include({ top: 64, left: 0});
+      simulateKeyDown('ArrowUp');
+      simulateKeyDown('ArrowUp');
+      wrapper.update();
+      expect(wrapper.find(Player).props().style).to.include({ top: 0, left: 0});
+    });
   });
 
   describe('when player tries to move into a wall', () => {
@@ -69,7 +61,7 @@ describe('Game integration', () => {
       wrapper.update();
 
       expect(wrapper.text()).to.match(/Moves left: 4/);
-      expect(wrapper.find(Player).props().style).to.include({ top: 64, left: -0});
+      expect(wrapper.find(Player).props().style).to.include({ top: 64, left: 0});
     })
 
   })
